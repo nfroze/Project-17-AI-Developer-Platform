@@ -34,49 +34,6 @@ module "eks" {
   }
 }
 
-# Deploy ArgoCD
-resource "helm_release" "argocd" {
-  name             = "argocd"
-  repository       = "https://argoproj.github.io/argo-helm"
-  chart            = "argo-cd"
-  version          = "5.51.4"
-  namespace        = "argocd"
-  create_namespace = true
-
-  values = [file("${path.module}/../helm-values/argocd-values.yaml")]
-  
-  depends_on = [module.eks]
-}
-
-# Deploy MLflow
-resource "helm_release" "mlflow" {
-  name             = "mlflow"
-  repository       = "https://community-charts.github.io/helm-charts"
-  chart            = "mlflow"
-  version          = "0.7.19"
-  namespace        = "mlflow"
-  create_namespace = true
-
-  values = [file("${path.module}/../helm-values/mlflow-values.yaml")]
-  
-  depends_on = [module.eks]
-}
-
-# Deploy Backstage
-resource "helm_release" "backstage" {
-  name             = "backstage"
-  repository       = "https://backstage.github.io/charts"
-  chart            = "backstage"
-  version          = "1.9.0"
-  namespace        = "backstage"
-  create_namespace = true
-
-  values = [file("${path.module}/../helm-values/backstage-values.yaml")]
-  
-  depends_on = [module.eks]
-}
-
-# Get EKS cluster auth
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_name
 }
