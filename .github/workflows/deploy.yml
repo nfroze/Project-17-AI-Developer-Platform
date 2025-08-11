@@ -1,4 +1,4 @@
-name: Deploy Platform
+name: Validate and Update Application
 
 on:
   push:
@@ -10,7 +10,20 @@ env:
   ECR_REPOSITORY: gpu-cost-tracker
 
 jobs:
-  deploy:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run Security Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          severity: 'CRITICAL,HIGH'
+
+  update-application:
+    needs: validate
     runs-on: ubuntu-latest
     
     steps:
@@ -23,18 +36,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
       
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        
-      - name: Terraform Init
-        working-directory: ./terraform
-        run: terraform init
-        
-      - name: Create ECR Repository
-        working-directory: ./terraform
-        run: |
-          terraform apply -target=aws_ecr_repository.cost_tracker -auto-approve
-      
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
@@ -46,9 +47,4 @@ jobs:
           cd custom-services/gpu-cost-tracker
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-      
-      - name: Deploy Infrastructure
-        working-directory: ./terraform
-        run: |
-          terraform apply -auto-approve
-          echo "::notice::Deployment complete! Check terraform output for URLs"
+          echo "::notice::Docker image updated! ECS will pull the new image on next deployment"
