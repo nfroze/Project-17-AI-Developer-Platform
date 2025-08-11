@@ -11,7 +11,7 @@ Built a self-service Internal Developer Platform that reduced AI model deploymen
 - ✅ 70% cost reduction using ECS for stateless services vs K8s
 - ✅ Enterprise-ready with full CI/CD and security scanning
 
-**Live Demo:** Platform running on AWS with EKS (platform services) + ECS Fargate (cost optimization)
+**Live Demo:** Platform running on AWS with EKS (platform services) + ECS Fargate (cost optimisation)
 
 ---
 
@@ -21,7 +21,7 @@ Built a self-service Internal Developer Platform that reduced AI model deploymen
 AI/ML teams were waiting 2+ weeks for infrastructure provisioning. GPU resources were being wasted (40% idle time). No visibility into AI spending until monthly AWS bills arrived. Each team was implementing their own deployment patterns.
 
 ### The Solution
-A unified Internal Developer Platform (IDP) that provides self-service infrastructure provisioning, standardized deployment patterns, and real-time cost visibility for AI workloads.
+A unified Internal Developer Platform (IDP) that provides self-service infrastructure provisioning, standardised deployment patterns, and real-time cost visibility for AI workloads.
 
 ---
 
@@ -35,7 +35,7 @@ A unified Internal Developer Platform (IDP) that provides self-service infrastru
 ### Core Components
 
 #### 1. **Backstage Developer Portal**
-- Self-service catalog with GPU-optimized templates
+- Self-service catalogue with GPU-optimised templates
 - One-click provisioning for TensorFlow/PyTorch/HuggingFace models
 - Integrated cost estimation before deployment
 
@@ -45,12 +45,12 @@ A unified Internal Developer Platform (IDP) that provides self-service infrastru
 - Self-healing infrastructure with drift detection
 
 #### 3. **MLflow Model Registry**
-- Centralized model versioning
+- Centralised model versioning
 - Experiment tracking with GPU metrics
 - Direct deployment pipeline integration
 
 #### 4. **GPU Cost Tracker**
-- Real-time GPU utilization monitoring
+- Real-time GPU utilisation monitoring
 - Budget alerts and spending projections
 - Per-team cost allocation
 - Token usage tracking for AI APIs (OpenAI, Anthropic)
@@ -61,10 +61,10 @@ A unified Internal Developer Platform (IDP) that provides self-service infrastru
 
 ### Quantifiable Results
 - **Deployment Speed**: 48x faster (2 weeks → 30 minutes)
-- **GPU Utilization**: Increased from 60% to 85% (preventing £6,950/month in idle GPU costs)
+- **GPU Utilisation**: Increased from 60% to 85% (preventing £6,950/month in idle GPU costs)
 - **Total Cost Savings**: £10-40K/month through:
-  - GPU utilization improvements
-  - Spot instance optimization  
+  - GPU utilisation improvements
+  - Spot instance optimisation  
   - ECS for non-K8s workloads
 - **Developer Productivity**: 30% increase in model deployments
 
@@ -100,7 +100,7 @@ Priority Classes:
 ```
 
 ### Model Deployment Templates
-- **TensorFlow Serving**: Optimized for production inference
+- **TensorFlow Serving**: Optimised for production inference
 - **PyTorch TorchServe**: Native PyTorch model serving
 - **HuggingFace Transformers**: Pre-configured for LLMs
 - **Custom FastAPI**: Flexible wrapper for any model
@@ -116,7 +116,7 @@ Priority Classes:
 - **Vector Database Setup**: One-click Pinecone/Weaviate provisioning
 
 ### Cost Intelligence
-- Real-time GPU utilization tracking
+- Real-time GPU utilisation tracking
 - AI API token consumption monitoring
 - Predictive budget alerts
 - Automated cost anomaly detection
@@ -125,7 +125,7 @@ Priority Classes:
 - Golden path templates for common workflows
 - Integrated documentation and tutorials
 - Slack notifications for deployment status
-- Service catalog with dependency mapping
+- Service catalogue with dependency mapping
 
 ---
 
@@ -146,7 +146,7 @@ Priority Classes:
 ### Monitoring & Cost
 - **Custom Cost Tracker**: Node.js/Express with real-time dashboards
 - **Prometheus**: Metrics collection
-- **Grafana**: Visualization (planned)
+- **Grafana**: Visualisation (planned)
 
 ---
 
@@ -154,7 +154,7 @@ Priority Classes:
 
 1. **Hybrid Architecture**: Intelligently routes workloads to EKS or ECS based on complexity, reducing costs by 40%
 
-2. **GPU Scheduling Algorithm**: Custom priority-based scheduler that increased GPU utilization from 60% to 85%
+2. **GPU Scheduling Algorithm**: Custom priority-based scheduler that increased GPU utilisation from 60% to 85%
 
 3. **Cost Circuit Breakers**: Automated spending limits that prevent budget overruns without blocking critical workloads
 
@@ -180,7 +180,7 @@ Priority Classes:
 ## 🔮 Future Enhancements
 
 - **Multi-cloud support**: Extend to Azure ML and Vertex AI
-- **Advanced FinOps**: Predictive cost optimization using ML
+- **Advanced FinOps**: Predictive cost optimisation using ML
 - **Model performance monitoring**: A/B testing and canary deployments
 - **Automated retraining**: Trigger based on drift detection
 
@@ -192,22 +192,22 @@ Priority Classes:
 *GitOps dashboard showing automated deployments*
 
 ![Cost Tracker](screenshots/cost-tracker.png)
-*Real-time GPU utilization and cost monitoring*
+*Real-time GPU utilisation and cost monitoring*
 
 ![Backstage Portal](screenshots/backstage-portal.png)
 *Self-service developer portal with GPU templates*
 
 ![MLflow Registry](screenshots/mlflow-registry.png)
-*Centralized model registry with versioning*
+*Centralised model registry with versioning*
 
 ---
 
 ## 🏆 Why This Matters
 
 This platform solves real problems faced by every AI-first company:
-- **Democratizes AI infrastructure** - Data scientists don't need DevOps expertise
+- **Democratises AI infrastructure** - Data scientists don't need DevOps expertise
 - **Prevents cost explosions** - GPU spending is tracked and controlled
-- **Standardizes deployments** - No more "works on my machine"
+- **Standardises deployments** - No more "works on my machine"
 - **Scales with growth** - From startup to enterprise ready
 
 Built with production-grade practices including GitOps, FinOps, and platform engineering principles that are becoming industry standard.
