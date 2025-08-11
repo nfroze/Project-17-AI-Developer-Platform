@@ -1,4 +1,4 @@
-# 🏗️ Project 17: AI Developer Platform with GPU Resource Management
+# 🏗️ Project 17: AI Developer Platform
 
 ## 🎯 TLDR
 
