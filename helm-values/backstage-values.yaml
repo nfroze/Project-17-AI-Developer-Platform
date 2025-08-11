@@ -1,19 +1,35 @@
-image:
-  repository: ghcr.io/mlflow/mlflow
-  tag: latest
+app:
+  title: AI Developer Platform
+  baseUrl: http://localhost:7007
+
+organization:
+  name: Platform Engineering Team
 
 backend:
-  store_uri: postgresql://mlflow:mlflow@postgres/mlflow
-  artifact_root: s3://mlflow-artifacts
+  baseUrl: http://localhost:7007
+  database:
+    client: pg
+    connection:
+      host: postgres
+      port: 5432
+      user: backstage
+      password: backstage
 
-service:
-  type: LoadBalancer
-  port: 5000
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
 
-resources:
-  requests:
-    memory: "512Mi"
-    cpu: "500m"
-  limits:
-    memory: "1Gi"
-    cpu: "1000m"
+kubernetes:
+  clusterLocatorMethods:
+    - type: config
+      clusters:
+        - name: ai-platform
+          url: ${KUBERNETES_API_URL}
+          authProvider: serviceAccount
+
+aiPlatform:
+  mlflow:
+    url: http://mlflow:5000
+  costTracker:
+    url: http://gpu-cost-tracker:3000

@@ -1,49 +1,19 @@
-app:
-  title: AI Developer Platform
-  baseUrl: http://localhost:7007
-
-organization:
-  name: Platform Engineering Team
+image:
+  repository: ghcr.io/mlflow/mlflow
+  tag: latest
 
 backend:
-  baseUrl: http://localhost:7007
-  database:
-    client: pg
-    connection:
-      host: postgres
-      port: 5432
-      user: backstage
-      password: backstage
+  store_uri: postgresql://mlflow:mlflow@postgres/mlflow
+  artifact_root: s3://mlflow-artifacts
 
-integrations:
-  github:
-    - host: github.com
-      token: ${GITHUB_TOKEN}
+service:
+  type: LoadBalancer
+  port: 5000
 
-catalog:
-  locations:
-    - type: file
-      target: /app/templates/catalog-info.yaml
-    - type: file  
-      target: /app/templates/tensorflow-model.yaml
-    - type: file
-      target: /app/templates/gpu-workload.yaml
-
-kubernetes:
-  clusterLocatorMethods:
-    - type: config
-      clusters:
-        - name: ai-platform
-          url: ${KUBERNETES_API_URL}
-          authProvider: serviceAccount
-
-# AI Platform Configuration
-aiPlatform:
-  mlflow:
-    url: http://mlflow:5000
-  costTracker:
-    url: http://gpu-cost-tracker:3000
-  gpuTypes:
-    - nvidia-t4
-    - nvidia-v100
-    - nvidia-a100
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "500m"
+  limits:
+    memory: "1Gi"
+    cpu: "1000m"
