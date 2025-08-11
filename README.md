@@ -23,6 +23,20 @@ AI/ML teams were waiting 2+ weeks for infrastructure provisioning. GPU resources
 ### The Solution
 A unified Internal Developer Platform (IDP) that provides self-service infrastructure provisioning, standardised deployment patterns, and real-time cost visibility for AI workloads.
 
+### The 30-Minute Workflow
+**From laptop to production with cost controls:**
+
+1. **Developer opens Backstage portal** → Selects from pre-approved templates
+2. **Chooses model type** → TensorFlow/PyTorch/HuggingFace + GPU requirements  
+3. **Backstage creates Git commit** → Infrastructure as Code generated automatically
+4. **ArgoCD detects change** → GitOps automation triggers deployment
+5. **Infrastructure provisions** → EKS for models, ECS for supporting services
+6. **MLflow registers model** → Version tracked with experiment metrics
+7. **Cost Tracker activates** → Real-time monitoring with budget alerts
+8. **Auto-scaling enabled** → Scale up for demand, down to save costs
+
+**Result:** Model serving in production in 30 minutes vs 2 weeks traditionally
+
 ---
 
 ## 🏗️ Architecture
