@@ -1,0 +1,83 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: tensorflow-gpu-model
+  title: TensorFlow Model with GPU
+  description: Deploy TensorFlow model with automatic GPU allocation and cost tracking
+  tags:
+    - ai
+    - tensorflow
+    - gpu
+spec:
+  owner: platform-team
+  type: ai-service
+  parameters:
+    - title: Model Configuration
+      required:
+        - name
+        - modelPath
+      properties:
+        name:
+          title: Model Name
+          type: string
+          pattern: '^[a-z0-9-]+$'
+        modelPath:
+          title: Model S3/GCS Path
+          type: string
+        gpuType:
+          title: GPU Type
+          type: string
+          enum:
+            - nvidia-t4
+            - nvidia-v100
+            - nvidia-a100
+          default: nvidia-t4
+        replicas:
+          title: Replicas
+          type: integer
+          default: 1
+          minimum: 1
+          maximum: 10
+
+  steps:
+    - id: register
+      name: Register Model
+      action: http:backstage:request
+      input:
+        method: POST
+        path: 'http://mlflow:5000/api/2.0/mlflow/registered-models/create'
+        body:
+          name: ${{ parameters.name }}
+          tags:
+            - key: gpu_type
+              value: ${{ parameters.gpuType }}
+            - key: estimated_cost
+              value: ${{ parameters.gpuType === 'nvidia-t4' && '12.62' || parameters.gpuType === 'nvidia-v100' && '59.52' || '73.44' }}/day
+    
+    - id: deploy
+      name: Create ArgoCD Application
+      action: argocd:create-app
+      input:
+        name: ${{ parameters.name }}
+        namespace: ai-models
+        source:
+          repoURL: https://github.com/your-org/model-deployments
+          targetRevision: HEAD
+        parameters:
+          - name: model.name
+            value: ${{ parameters.name }}
+          - name: model.path
+            value: ${{ parameters.modelPath }}
+          - name: gpu.type
+            value: ${{ parameters.gpuType }}
+          - name: replicas
+            value: ${{ parameters.replicas }}
+
+  output:
+    links:
+      - title: Model in MLflow
+        url: http://localhost:5000/models/${{ parameters.name }}
+      - title: ArgoCD Deployment
+        url: http://localhost:8080/applications/${{ parameters.name }}
+      - title: Cost Tracking
+        url: http://localhost:3000/model/${{ parameters.name }}

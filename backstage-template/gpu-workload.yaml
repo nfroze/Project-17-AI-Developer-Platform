@@ -1,0 +1,79 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: gpu-training-job
+  title: GPU Training Workload
+  description: Provision GPU resources for model training with cost controls
+  tags:
+    - training
+    - gpu
+    - ml
+spec:
+  owner: platform-team
+  type: training-job
+  parameters:
+    - title: Training Configuration
+      required:
+        - name
+        - framework
+      properties:
+        name:
+          title: Job Name
+          type: string
+        framework:
+          title: ML Framework
+          type: string
+          enum:
+            - pytorch
+            - tensorflow
+            - jax
+        gpuCount:
+          title: Number of GPUs
+          type: integer
+          default: 1
+          minimum: 1
+          maximum: 8
+        maxHours:
+          title: Max Runtime (hours)
+          type: integer
+          default: 24
+          description: Job will be terminated after this time (cost control)
+        priority:
+          title: Priority
+          type: string
+          enum:
+            - low
+            - medium
+            - high
+          default: medium
+
+  steps:
+    - id: check-budget
+      name: Check Budget
+      action: http:backstage:request
+      input:
+        method: GET
+        path: 'http://gpu-cost-tracker:3000/api/budget/check'
+        params:
+          gpuCount: ${{ parameters.gpuCount }}
+          hours: ${{ parameters.maxHours }}
+          
+    - id: allocate-gpu
+      name: Allocate GPU Resources
+      action: http:backstage:request
+      input:
+        method: POST
+        path: 'http://gpu-cost-tracker:3000/api/allocate'
+        body:
+          name: ${{ parameters.name }}
+          framework: ${{ parameters.framework }}
+          gpuCount: ${{ parameters.gpuCount }}
+          maxHours: ${{ parameters.maxHours }}
+          priority: ${{ parameters.priority }}
+
+  output:
+    text:
+      - title: Allocation ID
+        content: ${{ steps['allocate-gpu'].output.body.allocationId }}
+      - title: Estimated Cost
+        content: ${{ steps['allocate-gpu'].output.body.estimatedCost }}

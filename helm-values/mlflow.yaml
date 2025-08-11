@@ -1,0 +1,19 @@
+image:
+  repository: ghcr.io/mlflow/mlflow
+  tag: latest
+
+backend:
+  store_uri: postgresql://mlflow:mlflow@postgres/mlflow
+  artifact_root: s3://mlflow-artifacts
+
+service:
+  type: LoadBalancer
+  port: 5000
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "500m"
+  limits:
+    memory: "1Gi"
+    cpu: "1000m"

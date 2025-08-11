@@ -1,0 +1,54 @@
+name: Deploy Platform
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: eu-west-2
+  ECR_REPOSITORY: gpu-cost-tracker
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        
+      - name: Terraform Init
+        working-directory: ./terraform
+        run: terraform init
+        
+      - name: Create ECR Repository
+        working-directory: ./terraform
+        run: |
+          terraform apply -target=aws_ecr_repository.cost_tracker -auto-approve
+      
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      
+      - name: Build and push Docker image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          cd custom-services/gpu-cost-tracker
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+      
+      - name: Deploy Infrastructure
+        working-directory: ./terraform
+        run: |
+          terraform apply -auto-approve
+          echo "::notice::Deployment complete! Check terraform output for URLs"
