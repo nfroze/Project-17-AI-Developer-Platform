@@ -173,7 +173,7 @@ Priority Classes:
 - Supports unlimited model deployments
 - GPU resource tracking and allocation
 - Multi-team support with namespace isolation  
-- Projected $600K annual savings at scale
+- Projected £120-480K annual savings at scale
 
 ---
 
