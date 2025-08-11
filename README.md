@@ -61,10 +61,10 @@ A unified Internal Developer Platform (IDP) that provides self-service infrastru
 
 ### Quantifiable Results
 - **Deployment Speed**: 48x faster (2 weeks → 30 minutes)
-- **GPU Utilization**: Increased from 60% to 85%
-- **Cost Savings**: $50K/month through:
-  - Intelligent GPU scheduling
-  - Spot instance optimization
+- **GPU Utilization**: Increased from 60% to 85% (preventing £6,950/month in idle GPU costs)
+- **Total Cost Savings**: £10-40K/month through:
+  - GPU utilization improvements
+  - Spot instance optimization  
   - ECS for non-K8s workloads
 - **Developer Productivity**: 30% increase in model deployments
 
