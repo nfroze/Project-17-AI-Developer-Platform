@@ -1,6 +1,6 @@
 # Project 17: AI Developer Platform with GPU Resource Management
 
-## 🎯 TL;DR
+## 🎯 TLDR
 
 Built a self-service Internal Developer Platform that reduced AI model deployment time from **days to 30 minutes** while cutting infrastructure costs by **40%** through intelligent GPU scheduling and hybrid EKS/ECS architecture.
 
