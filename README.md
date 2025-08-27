@@ -126,10 +126,10 @@ Validate (Security Scan) → Build (Docker) → Deploy (ECS) → Update (ArgoCD)
 
 ## Screenshots
 
-1. ArgoCD dashboard showing deployments
-2. Cost Tracker web interface
-3. Backstage portal with service catalogue
-4. MLflow registry with model versions
+1. [ArgoCD dashboard showing deployments](screenshots/argocd-dashboard.png)
+2. [Cost Tracker web interface](screenshots/cost-tracker.png)
+3. [Backstage portal with service catalogue](screenshots/backstage-portal.png)
+4. [MLflow registry with model versions](screenshots/mlflow-registry.png)
 
 ## Deployment Process
 
