@@ -8,7 +8,10 @@ AWS EKS • ECS Fargate • Backstage • MLflow • ArgoCD • Terraform • He
 
 ## Screenshots
 
-- [ArgoCD dashboard](screenshots/argocd-dashboard.png)
-- [Cost Tracker interface](screenshots/cost-tracker.png)
-- [Backstage portal](screenshots/backstage-portal.png)
-- [MLflow registry](screenshots/mlflow-registry.png)
+![ArgoCD dashboard](screenshots/argocd-dashboard.png)
+
+![Cost Tracker interface](screenshots/cost-tracker.png)
+
+![Backstage portal](screenshots/backstage-portal.png)
+
+![MLflow registry](screenshots/mlflow-registry.png)
